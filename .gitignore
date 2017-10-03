@@ -1,0 +1,4 @@
+node_modules
+*.svg
+output/*
+temp/*
