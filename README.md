@@ -4,7 +4,7 @@
 Do you have designs in Sketch, and need to turn those into a mobile app?  This will take those designs, and automatically create React Native components.
 
 
-![Sketch to React Native](sketch_to_react_native.png?raw=true)
+![Sketch to React Native](images/sketch_to_react_native.png?raw=true)
 
 ## Want to try it without installing everything?
 
@@ -36,12 +36,12 @@ We offer that!  We also offer a **human in the loop**, where we'll clean up the 
 ### Extract the component from Sketch as an SVG:
 
 
-![Export Instructions](export_instructions.png?raw=true)
+![Export Instructions](images/export_instructions.png?raw=true)
 
-![Export Instructions 2](export_instructions_2.png?raw=true)
+![Export Instructions 2](images/export_instructions_2.png?raw=true)
 
 
-### Use that SVG file as the argument for conver.js
+### Use that SVG file as the argument for convert.js
 
 ```
 > node convert.js input-file.svg
@@ -132,7 +132,7 @@ If you'd like to help, I'd love to have you involved!  Feel free to file issues,
 # Example
 
 
-![Sketch to React Native conversion example](sketch_conversion.png?raw=true "Example Conversion")
+![Sketch to React Native conversion example](images/sketch_conversion.png?raw=true "Example Conversion")
 
 
 You can see that it's not perfect - but it provides a really good starting point, and it's getting better all the time!
