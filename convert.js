@@ -27,8 +27,10 @@ if(!INPUT_FILE || INPUT_FILE == '' || !INPUT_FILE.match(/\.svg$/)) {
 const pathArray = INPUT_FILE.split('/')
 const INPUT_FILENAME = pathArray[pathArray.length - 1]
 
-const INPUT_FILE_NO_SPACES = INPUT_FILENAME.replace(/\s/g, '_').split(".svg")[0] + ".js"
+const INPUT_FILE_NO_SPACES = INPUT_FILENAME.replace(/\s/g, '_').split(".svg")[0]
 const OUTPUT_FILE = INPUT_FILE_NO_SPACES.split(".svg")[0] + ".js"
+
+console.warn("OUTPUT_FILE", OUTPUT_FILE)
 
 const OUTPUT_DIR = './output'
 const TEMP_DIR = './temp'
