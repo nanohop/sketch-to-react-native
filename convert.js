@@ -22,12 +22,13 @@ const INPUT_FILE = process.argv[2]
 if(!INPUT_FILE || INPUT_FILE == '' || !INPUT_FILE.match(/\.svg$/)) {
   throw "Usage: convert.js [svg_file]"
 }
+const INPUT_FILE_NO_SPACES = INPUT_FILE.replace(/\s/g, '_')
 
-const OUTPUT_FILE = INPUT_FILE.split(".svg")[0] + ".js"
+const OUTPUT_FILE = INPUT_FILE_NO_SPACES.split(".svg")[0] + ".js"
 
 const OUTPUT_DIR = './output'
 const TEMP_DIR = './temp'
-const IMAGES_DIR = INPUT_FILE.split(".svg")[0]+'_images'
+const IMAGES_DIR = INPUT_FILE_NO_SPACES.split(".svg")[0]+'_images'
 const TEMP_IMAGES_DIR = './temp/'+IMAGES_DIR
 
 makeDir(OUTPUT_DIR); // don't delete what's in output each time!
@@ -79,7 +80,7 @@ emptyAndCreateDir(TEMP_IMAGES_DIR);
       }
       unrollJs(js);
 
-      const boxComponents = flexBox([orderedIds[0]], idDims, parentChildren)
+      const boxComponents = flexBox([orderedIds[0]], idDims, parentChildren, childParent)
 
       const flatEles = flattenBoxComponents(boxComponents, boxComponents.id, idDims, jsObjs);
 

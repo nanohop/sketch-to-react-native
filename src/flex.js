@@ -3,7 +3,7 @@ const { determineAlignJustify } = require('./attributes');
 
 
 
-const flexColumns = (nodeIds, idDims, parentChildren) => {
+const flexColumns = (nodeIds, idDims, parentChildren, childParent) => {
   if(nodeIds.length == 0) {
     return nodeIds
   }
@@ -51,7 +51,7 @@ const flexColumns = (nodeIds, idDims, parentChildren) => {
       const children = parentChildren[comps[0]] ? parentChildren[comps[0]] : [];
       cols.push({
         id: comps[0],
-        children: flexBox(children, idDims, parentChildren)
+        children: flexBox(children, idDims, parentChildren, childParent)
       })
     } else if(comps.length == orderedNodeIds.length) {
       let parentDims = idDims[childParent[comps[0]]];
@@ -72,7 +72,7 @@ const flexColumns = (nodeIds, idDims, parentChildren) => {
           const children = parentChildren[c] ? parentChildren[c] : [];
           return { 
             id: c,
-            children: flexBox(children, idDims, parentChildren)
+            children: flexBox(children, idDims, parentChildren, childParent)
           }
         })
       });
@@ -91,7 +91,7 @@ const flexColumns = (nodeIds, idDims, parentChildren) => {
       cols.push({
         id: 'column',
         parentDims,
-        children: flexRows(comps, idDims, parentChildren)
+        children: flexRows(comps, idDims, parentChildren, childParent)
       })
     }
   }
@@ -101,7 +101,7 @@ const flexColumns = (nodeIds, idDims, parentChildren) => {
 
 
 
-const flexRows = (nodeIds, idDims, parentChildren) => {
+const flexRows = (nodeIds, idDims, parentChildren, childParent) => {
   if(nodeIds.length == 0) {
     return nodeIds
   }
@@ -150,7 +150,7 @@ const flexRows = (nodeIds, idDims, parentChildren) => {
       const children = parentChildren[comps[0]] ? parentChildren[comps[0]] : [];
       rows.push({
         id: comps[0],
-        children: flexBox(children, idDims, parentChildren)
+        children: flexBox(children, idDims, parentChildren, childParent)
       });
     } else if(comps.length == orderedNodeIds.length) {
       let parentDims = idDims[childParent[comps[0]]];
@@ -171,7 +171,7 @@ const flexRows = (nodeIds, idDims, parentChildren) => {
           const children = parentChildren[c] ? parentChildren[c] : [];
           return {
             id: c,
-            children: flexBox(children, idDims, parentChildren)
+            children: flexBox(children, idDims, parentChildren, childParent)
           }
         })
       });
@@ -190,7 +190,7 @@ const flexRows = (nodeIds, idDims, parentChildren) => {
       rows.push({
         id: 'row',
         parentDims,
-        children: flexColumns(comps, idDims, parentChildren)
+        children: flexColumns(comps, idDims, parentChildren, childParent)
       })
     }
   }
@@ -245,7 +245,7 @@ const maxRight = (ids, idDims) => {
 
 
 
-const flexBox = (nodeIds, idDims, parentChildren) => {
+const flexBox = (nodeIds, idDims, parentChildren, childParent) => {
   // NOTE! nodes here can be cols or rows; currently it's just
   // based on whatever they are in the design... This 
   // will have to be addressed when there is a design that 
@@ -253,7 +253,7 @@ const flexBox = (nodeIds, idDims, parentChildren) => {
   
   // SO, a todo here is to detect if siblings are rows or columns
   // (can they be both? no. have to break up into rows first, or cols first.)
-  return flexRows(nodeIds, idDims, parentChildren)
+  return flexRows(nodeIds, idDims, parentChildren, childParent)
 }
 
 

@@ -2,3 +2,4 @@ node_modules
 *.svg
 output/*
 temp/*
+.DS_Store
