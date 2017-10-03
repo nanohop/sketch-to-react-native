@@ -53,7 +53,7 @@ It will run and save the output to the ./output folder.  Make sure to grab both 
 
 ## What if it doesn't work?
 
-Please let me know!  This is early software, and I'm trying to solve as many edge cases as I can find.  Please file and issue or send me and email.
+Please let me know!  This is early software, and I'm trying to solve as many edge cases as I can find.  Please file an issue or send me an email.
 
 
 
@@ -107,7 +107,7 @@ I've found that screens that would normally take me about an hour to create, tak
 
 ## Why use headless Chrome?
 
-It seems like overkill, but headless Chrome has a great SVG rendering engine, and it was the easiest way to get bounding boxes to work, and to export the SVG asses as pngs.  That will probably change in the future.
+It seems like overkill, but headless Chrome has a great SVG rendering engine, and it was the easiest way to get bounding boxes to work, and to export the SVG assets as pngs.  That will probably change in the future.
 
 
 ## Is there a way to try this out without installing everything?
