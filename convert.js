@@ -9,6 +9,7 @@ const { generateComponent, generateComponentStrings } = require('./src/output');
 const { firstBackgroundColor, nativeAttrs } = require('./src/attributes');
 const { generateChildParent } = require('./src/components');
 const { prepData } = require('./src/input');
+const { removeStatusBarAndKeyboard } = require('./src/neural_net');
 const { 
   aboutZero,
   aboutEqual,
@@ -30,10 +31,12 @@ const OUTPUT_DIR = './output'
 const TEMP_DIR = './temp'
 const IMAGES_DIR = INPUT_FILE_NO_SPACES.split(".svg")[0]+'_images'
 const TEMP_IMAGES_DIR = './temp/'+IMAGES_DIR
+const TEMP_COMPONENT_DIR = './temp/components'
 
 makeDir(OUTPUT_DIR); // don't delete what's in output each time!
 emptyAndCreateDir(TEMP_DIR);
 emptyAndCreateDir(TEMP_IMAGES_DIR);
+emptyAndCreateDir(TEMP_COMPONENT_DIR);
 
 
 (async () => {
@@ -52,9 +55,11 @@ emptyAndCreateDir(TEMP_IMAGES_DIR);
 
       const preppedFile = 'file://'+CURRENT_DIR+'/temp/prepped_'+INPUT_FILE;
 
-      await getBrowserBoundingBoxes(processedJS, preppedFile);
+      const cleanedJS = await removeStatusBarAndKeyboard(preppedFile, TEMP_COMPONENT_DIR, processedJS);
+
+      await getBrowserBoundingBoxes(cleanedJS, preppedFile);
       
-      const js = imagifyParents(processedJS)
+      const js = imagifyParents(cleanedJS)
       const { idDims, orderedIds } = await getBrowserBoundingBoxes(js, preppedFile);
 
       const mainBackgroundColor = firstBackgroundColor(js.childs[0], js.childs[0], idDims);

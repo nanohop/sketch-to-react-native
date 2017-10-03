@@ -1,0 +1,7 @@
+activity
+button
+keyboard
+slider
+status bar
+switch
+text

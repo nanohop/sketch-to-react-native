@@ -1,6 +1,28 @@
 const puppeteer = require('puppeteer');
 
 
+const getAllElementIds = (js) => {
+  let ids = js.childs.filter((child) => {
+    return child.id;
+  }).map((child) => {
+    return child.id;
+  });
+  js.childs.forEach((child) => {
+    const childIds = getAllElementIds(child);
+    ids = [...ids, ...childIds]
+  })
+  return ids;
+}
+
+const screenshotAllElements = (async (file, tempDir, rootJS) => {
+
+  let elements = getAllElementIds(rootJS);
+  console.warn("gathering elements...")
+  await screenshotElements(file, tempDir, elements);
+
+})
+
+
 const screenshotElements = (async (file, tempDir, elementIds) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -94,3 +116,4 @@ const getBrowserBoundingBoxes = (async (js, file) => {
 
 module.exports.getBrowserBoundingBoxes = getBrowserBoundingBoxes;
 module.exports.screenshotElements = screenshotElements;
+module.exports.screenshotAllElements = screenshotAllElements;
