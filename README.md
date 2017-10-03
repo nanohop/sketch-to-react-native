@@ -21,9 +21,10 @@ We offer that!  We also offer a **human in the loop**, where we'll clean up the 
 
 # Getting started
 
-### Language prerequisites:
-* node 8.5.0+ https://nodejs.org/en/
-
+### Prerequisites:
+* Node 8.5.0+ https://nodejs.org/en/
+* Python 3.6.1+ https://www.python.org/downloads/
+* Install TensorFlow https://www.tensorflow.org/install/
 
 ### Steps to run:
 
@@ -62,13 +63,14 @@ Please let me know!  This is early software, and I'm trying to solve as many edg
 Sketch exports a fairly clean SVG, which makes the process easier, but there is still a lot of processing involved.  Here's the basic steps:
 
 1. Prep the SVG to make processing easier
-2. Get component bounding boxes using headless Chrome
-3. Figure out all the child/parent relationships
-4. Convert from absolute (pixel) positioning to Flex Box
-5. Extract images from SVG paths and polygons
-6. Generate styles for every component
-7. Generate components
-8. Export to an output file
+2. Use a deep neural net to filter out unwanted elements
+3. Get component bounding boxes using headless Chrome
+4. Figure out all the child/parent relationships
+5. Convert from absolute (pixel) positioning to Flex Box
+6. Extract images from SVG paths and polygons
+7. Generate styles for every component
+8. Generate components
+9. Export to an output file
 
 
 ### A note about the most difficult part
