@@ -23,8 +23,11 @@ const INPUT_FILE = process.argv[2]
 if(!INPUT_FILE || INPUT_FILE == '' || !INPUT_FILE.match(/\.svg$/)) {
   throw "Usage: convert.js [svg_file]"
 }
-const INPUT_FILE_NO_SPACES = INPUT_FILE.replace(/\s/g, '_')
 
+const pathArray = INPUT_FILE.split('/')
+const INPUT_FILENAME = pathArray[pathArray.length - 1]
+
+const INPUT_FILE_NO_SPACES = INPUT_FILENAME.replace(/\s/g, '_').split(".svg")[0] + ".js"
 const OUTPUT_FILE = INPUT_FILE_NO_SPACES.split(".svg")[0] + ".js"
 
 const OUTPUT_DIR = './output'
@@ -46,14 +49,14 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
     const preppedData = prepData({
       data, 
       tempDir: TEMP_DIR, 
-      inputFile: INPUT_FILE
+      inputFile: INPUT_FILENAME
     });
 
     svgson(preppedData, {}, async function(result) {
 
       const processedJS = processNode(result);
 
-      const preppedFile = 'file://'+CURRENT_DIR+'/temp/prepped_'+INPUT_FILE;
+      const preppedFile = 'file://'+CURRENT_DIR+'/temp/prepped_'+INPUT_FILENAME;
 
       const cleanedJS = await removeStatusBarAndKeyboard(preppedFile, TEMP_COMPONENT_DIR, processedJS);
 
