@@ -17,7 +17,7 @@ const getAllElementIds = (js) => {
 const screenshotAllElements = (async (file, tempDir, rootJS) => {
 
   let elements = getAllElementIds(rootJS);
-
+  console.warn("gathering elements...")
   await screenshotElements(file, tempDir, elements);
 
 })
