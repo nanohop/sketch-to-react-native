@@ -35,10 +35,16 @@ We offer that!  We also offer a **human in the loop**, where we'll clean up the 
 
 ### Extract the component from Sketch as an SVG:
 
-[screenshots for how to do that in Sketch]
+
+![Export Instructions](export_instructions.png?raw=true)
+
+![Export Instructions 2](export_instructions_2.png?raw=true)
+
+
+### Use that SVG file as the argument for conver.js
 
 ```
-> node convert.js input-file.js
+> node convert.js input-file.svg
 ```
 
 It will run and save the output to the ./output folder.  Make sure to grab both the .js file, and the associated _images_ folder!  Drop that into your React Native application, and see the magic!
