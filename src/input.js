@@ -7,11 +7,14 @@ const prepData = ({ data, tempDir, inputFile }) => {
   const oldDefs = data.match(/\<defs\>[\s\S]*\<\/defs\>/g)
 
   const newData = data.replace(/\sid=\"[^\"]+/g, function(d) {
-    let onlyId = d.replace(/^\sid\=\"/, '')
+    let onlyId = d.replace(/^\sid\=\"/, '').replace(/[^\_0-9a-zA-Z]/g, '');
+
     if(onlyId.match(/^[0-9]+/)) {
       onlyId = "_" + onlyId
     }
-    d = ' id="' + onlyId.replace(/[^\_0-9a-zA-Z]/g, '');
+    
+    d = ' id="' + onlyId;
+
     if(idList.indexOf(d) >= 0) {
       const newId = d + "_" + idList.length
       idList.push(newId)

@@ -125,7 +125,7 @@ const nativeAttrs = (js, ele, idDims, childParent) => {
   }).join(" ");
 
   const attrs = attrString.length > 0 ? " " + attrString : "";
-  let styleId = js.id.replace(/[^0-9a-zA-Z]/g, '')
+  let styleId = js.id.replace(/[^\_0-9a-zA-Z]/g, '')
   if(styleId.match(/^[0-9]/)) {
     styleId = "_" + styleId
   }
