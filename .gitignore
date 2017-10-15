@@ -3,3 +3,4 @@ node_modules
 output/*
 temp/*
 .DS_Store
+scripts/__pycache__/*
