@@ -19,7 +19,7 @@ const {
 
 
 const CURRENT_DIR = __dirname
-const INPUT_FILE = process.argv[2]
+const INPUT_FILE = process.argv[1]
 if(!INPUT_FILE || INPUT_FILE == '' || !INPUT_FILE.match(/\.svg$/)) {
   throw "Usage: convert.js [svg_file]"
 }
