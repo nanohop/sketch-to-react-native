@@ -1,6 +1,9 @@
 
 # Convert Sketch files to React Native components
 
+* Sketch App: https://www.sketchapp.com/
+* React Native: https://facebook.github.io/react-native/
+
 Do you have designs in Sketch, and need to turn those into a mobile app?  This will take those designs, and automatically create React Native components.
 
 
