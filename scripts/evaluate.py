@@ -55,7 +55,7 @@ def evaluate_graph(graph_file_name):
     class_count = len(image_lists.keys())
     
     ground_truths = []
-    filenames = []
+    file_names = []
         
     for label_index, label_name in enumerate(image_lists.keys()):
       for image_index, image_name in enumerate(image_lists[label_name][category]):
@@ -64,12 +64,12 @@ def evaluate_graph(graph_file_name):
         ground_truth = np.zeros([1, class_count], dtype=np.float32)
         ground_truth[0, label_index] = 1.0
         ground_truths.append(ground_truth)
-        filenames.append(image_name)
+        file_names.append(image_name)
     
     accuracies = []
     xents = []
     with tf.Session(graph=graph) as sess:
-        for filename, ground_truth in zip(filenames, ground_truths):    
+        for filename, ground_truth in zip(file_names, ground_truths):
             image = Image.open(filename).resize((224,224),Image.ANTIALIAS)
             image = np.array(image, dtype=np.float32)[None,...]
             image = (image-128)/128.0
