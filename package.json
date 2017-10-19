@@ -2,7 +2,13 @@
   "name": "svg_to_react",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "convert.js",
+  "bin": {
+    "sketch-to-react-native": "./bin/sketch-to-react-native.js"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-node6": "^11.0.0",

@@ -29,12 +29,10 @@ We offer that!  We also offer a **human in the loop**, where we'll clean up the 
 * Python 3.6.1+ https://www.python.org/downloads/
 * Install TensorFlow https://www.tensorflow.org/install/
 
-### Steps to run:
+### Install and use:
 
-```
-> git clone git@github.com:nanohop/sketch-to-react-native.git
-> cd sketch-to-react-native
-> npm install
+```sh
+npm i -g sketch-to-react-native
 ```
 
 ### Extract the component from Sketch as an SVG:
@@ -45,10 +43,10 @@ We offer that!  We also offer a **human in the loop**, where we'll clean up the 
 ![Export Instructions 2](images/export_instructions_2.png?raw=true)
 
 
-### Use that SVG file as the argument for convert.js
+### Use that SVG file as the argument
 
-```
-> node convert.js input-file.svg
+```sh
+sketch-to-react-native input-file.svg
 ```
 
 It will run and save the output to the ./output folder.  Make sure to grab both the .js file, and the associated _images_ folder!  Drop that into your React Native application, and see the magic!
