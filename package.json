@@ -8,6 +8,7 @@
     "svgson": "^2.1.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-es2015-destructuring": "^6.23.0",
@@ -19,7 +20,7 @@
   "scripts": {
     "convert": "babel-node ./src",
     "build": "babel ./src -d ./build",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
