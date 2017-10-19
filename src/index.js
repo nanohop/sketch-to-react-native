@@ -142,7 +142,7 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
 
       console.log("")
       console.log("Images directory written: ", OUTPUT_DIR + '/' + IMAGES_DIR)
-      console.log("React Native component generated: ", OUTPUT_DIR + '/' + OUTPUT_FILE)
+      console.log(`${targets[TARGET].name} component generated: `, OUTPUT_DIR + '/' + OUTPUT_FILE)
       console.log("")
 
     });

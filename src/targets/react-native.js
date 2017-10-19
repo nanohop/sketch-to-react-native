@@ -317,6 +317,7 @@ ${styleSheetString}
   )
 }
 
+module.exports.name = 'React Native';
 module.exports.nativeAttrs = nativeAttrs;
 module.exports.generateComponent = generateComponent;
 module.exports.generateComponentStrings = generateComponentStrings;
