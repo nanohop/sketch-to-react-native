@@ -4,3 +4,4 @@ output/*
 temp/*
 .DS_Store
 scripts/__pycache__/*
+build
