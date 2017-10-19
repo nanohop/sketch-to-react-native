@@ -1,26 +1,28 @@
+require("regenerator-runtime/runtime");
+
 const svgson = require('svgson');
 const fs = require('fs');
+const path = require('path');
 
-const { emptyAndCreateDir, makeDir, copyFolderRecursive } = require('./src/lib/files');
-const { processNode, imagifyParents } = require('./src/process');
-const { getBrowserBoundingBoxes, screenshotElements } = require('./src/screenshot');
-const { flexBox, flattenBoxComponents } = require('./src/flex');
-const { generateComponent, generateComponentStrings } = require('./src/output');
-const { firstBackgroundColor, nativeAttrs } = require('./src/attributes');
-const { generateChildParent } = require('./src/components');
-const { prepData } = require('./src/input');
-const { removeStatusBarAndKeyboard } = require('./src/neural_net');
+const { emptyAndCreateDir, makeDir, copyFolderRecursive } = require('./lib/files');
+const { processNode, imagifyParents } = require('./process');
+const { getBrowserBoundingBoxes, screenshotElements } = require('./screenshot');
+const { flexBox, flattenBoxComponents } = require('./flex');
+const { generateComponent, generateComponentStrings } = require('./output');
+const { firstBackgroundColor, nativeAttrs } = require('./attributes');
+const { generateChildParent } = require('./components');
+const { prepData } = require('./input');
+const { removeStatusBarAndKeyboard } = require('./neural_net');
 const { 
   aboutZero,
   aboutEqual,
   allAboutEqual,
   smallComparedTo
-} = require('./src/lib/utils');
+} = require('./lib/utils');
 
 // catch unhandled rejections (e.g. async/await without try/catch)
 process.on("unhandledRejection", function(err) { console.error(err); });
 
-const CURRENT_DIR = __dirname
 const INPUT_FILE = process.argv[2]
 if(!INPUT_FILE || INPUT_FILE == '' || !INPUT_FILE.match(/\.svg$/)) {
   throw "Usage: convert.js [svg_file]"
@@ -32,17 +34,17 @@ const INPUT_FILENAME = pathArray[pathArray.length - 1]
 const INPUT_FILE_NO_SPACES = INPUT_FILENAME.replace(/\s/g, '_').split(".svg")[0]
 const OUTPUT_FILE = INPUT_FILE_NO_SPACES.split(".svg")[0] + ".js"
 
-const OUTPUT_DIR = './output'
-const TEMP_DIR = './temp'
-const IMAGES_DIR = INPUT_FILE_NO_SPACES.split(".svg")[0]+'_images'
-const TEMP_IMAGES_DIR = './temp/'+IMAGES_DIR
-const TEMP_COMPONENT_DIR = './temp/components'
+const BASE_PATH = path.resolve();
+const OUTPUT_DIR = 'output';
+const TEMP_DIR = 'temp';
+const IMAGES_DIR = INPUT_FILE_NO_SPACES.split(".svg")[0]+'_images';
+const TEMP_IMAGES_DIR = path.join(BASE_PATH, TEMP_DIR, IMAGES_DIR);
+const TEMP_COMPONENT_DIR = path.join(BASE_PATH, TEMP_DIR, 'components');
 
 makeDir(OUTPUT_DIR); // don't delete what's in output each time!
 emptyAndCreateDir(TEMP_DIR);
 emptyAndCreateDir(TEMP_IMAGES_DIR);
 emptyAndCreateDir(TEMP_COMPONENT_DIR);
-
 
 (async () => {
 
@@ -58,7 +60,7 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
 
       const processedJS = processNode(result);
 
-      const preppedFile = 'file://'+CURRENT_DIR+'/temp/prepped_'+INPUT_FILENAME;
+      const preppedFile = 'file://'+path.join(BASE_PATH, TEMP_DIR, 'prepped_'+INPUT_FILENAME);
 
       const cleanedJS = await removeStatusBarAndKeyboard(preppedFile, TEMP_COMPONENT_DIR, processedJS);
 

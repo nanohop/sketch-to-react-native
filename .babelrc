@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "node": "6.10.0"
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-regenerator",
+    "transform-async-to-generator",
+    [
+      "transform-object-rest-spread",
+      {
+        "useBuiltIns": true
+      }
+    ],
+    "transform-es2015-destructuring"
+  ]
+}
