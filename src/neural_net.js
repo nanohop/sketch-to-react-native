@@ -1,21 +1,22 @@
 
 const exec = require('child_process').exec;
 const fs = require('fs');
+const path = require('path');
 
 const { screenshotAllElements } = require('./screenshot');
 
 
-const childIsBadElement = (async (child) => {
+const childIsBadElement = (async (child, tempDir) => {
   if(!child.id || child.id == '') {
     return false
   }
 
-  const filepath = './temp/components/'+child.id+'.png';
+  const filepath = path.join(tempDir, 'components/'+child.id+'.png');
   if (!fs.existsSync(filepath)) {
     return false;
   }
 
-  const command = 'python -m scripts.label_image --graph=tf_files/retrained_graph.pb --image='+filepath;
+  const command = `python -m ${path.join(__dirname, '../scripts/label_image')} --graph=${path.join(__dirname, '../tf_files/retrained_graph.pb')} --image=`+filepath;
 
   return new Promise((resolve, reject) => {
     exec(command, 
@@ -50,22 +51,20 @@ const childIsBadElement = (async (child) => {
 });
 
 
-const filterElements = (async (js) => {
+const filterElements = (async (js, tempDir) => {
   if(js.childs) {
 
     const newChildren = await Promise.all(js.childs.map(async (child) => {
-      const childShouldBeFilteredOut = await childIsBadElement(child);
+      const childShouldBeFilteredOut = await childIsBadElement(child, tempDir);
       if(childShouldBeFilteredOut) {
         return null;
       } else {
-        await filterElements(child);
+        await filterElements(child, tempDir);
         return child
       }
     }));
 
-    const filteredChildren = newChildren.filter((child) => {
-      return child;
-    });
+    const filteredChildren = newChildren.filter(child => child);
     js.childs = filteredChildren
   }
   return js;
@@ -75,7 +74,7 @@ const removeStatusBarAndKeyboard = (async (file, tempDir, js) => {
   // Start with the children
   await screenshotAllElements(file, tempDir, js)
   console.warn("filtering elements...")
-  const newJS = await filterElements(js)
+  const newJS = await filterElements(js, tempDir)
 
   return newJS;
 })

@@ -141,8 +141,8 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
       fs.writeFileSync(OUTPUT_DIR + '/' + OUTPUT_FILE, generatedComponent)
 
       console.log("")
-      console.log("Images directory written: ", OUTPUT_DIR + '/' + IMAGES_DIR)
-      console.log(`${targets[TARGET].name} component generated: `, OUTPUT_DIR + '/' + OUTPUT_FILE)
+      console.log("Images directory written: ", path.join(BASE_PATH, OUTPUT_DIR, IMAGES_DIR))
+      console.log(`${targets[TARGET].name} component generated: `, path.join(BASE_PATH, OUTPUT_DIR, OUTPUT_FILE))
       console.log("")
 
     });
