@@ -17,6 +17,8 @@ const {
   smallComparedTo
 } = require('./src/lib/utils');
 
+// catch unhandled rejections (e.g. async/await without try/catch)
+process.on("unhandledRejection", function(err) { console.error(err); });
 
 const CURRENT_DIR = __dirname
 const INPUT_FILE = process.argv[2]
