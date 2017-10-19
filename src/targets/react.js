@@ -140,7 +140,9 @@ const generateStyleSheetString = (componentStyles) => {
       return `    ${styleKey}: ${styleString}`
     }).join(",\n");
     return `  ${key}: {
-${keyStyles}
+${keyStyles},
+    display: "${keyStyles.display || 'flex'}",
+    flexDirection: "${keyStyles.flexDirection || 'column'}"
   }`
   }).join(",\n")
 }
@@ -195,68 +197,56 @@ const generateComponentStrings = ({
 
     const styles = styleId ? ` style={styles.${styleId}}` : ''
 
-    if (js.type == 'Text') {
-      if (js.childs.length == 0) {
-        return `${ele.spaces}<p${attrs}${styles}>${js.text}${ele.single ? '</p>' : ''}`
-      }
-      if (js.childs.length == 1 && js.childs[0].type == 'Tspan') {
-        return `${ele.spaces}<p${attrs}${styles}>${js.text}${js.childs[0].text}</p>`
-      } else {
-        const tspans = js.childs.map((t) => {
-          if (t.type == 'Tspan') {
-            // TODO: once tspans have ids, change this
-            // const {Tattrs, TattrObjs, TstyleId} = attrs(t, ele);
-            // const Tstyles = TstyleId ? ` style={styles.${styleId}}` : ''
-            const Tstyles = ''
-            return `${ele.spaces}  <p${Tstyles}>${t.text}</p>{'\\n'}`
-          }
-        }).join("\n")
+    let imageStyle;
+    let jsname;
 
-        return `${ele.spaces}<p${attrs}${styles}>${js.text}\n${tspans}\n${ele.spaces}</p>`
-      }
+    switch (js.type) {
+      case 'Text':
+        if (js.childs.length == 0) {
+          return `${ele.spaces}<p${attrs}${styles}>${js.text}${ele.single ? '</p>' : ''}`
+        }
+        if (js.childs.length == 1 && js.childs[0].type == 'Tspan') {
+          return `${ele.spaces}<p${attrs}${styles}>${js.text}${js.childs[0].text}</p>`
+        } else {
+          const tspans = js.childs.map((t) => {
+            if (t.type == 'Tspan') {
+              // TODO: once tspans have ids, change this
+              // const {Tattrs, TattrObjs, TstyleId} = attrs(t, ele);
+              // const Tstyles = TstyleId ? ` style={styles.${styleId}}` : ''
+              const Tstyles = ''
+              return `${ele.spaces}  <p${Tstyles}>${t.text}</p>{'\\n'}`
+            }
+          }).join("\n")
 
-    }
-    if (js.type == 'Tspan') {
-      return `<p${styles}>${js.text}</p>`
-    }
-
-    if (js.type == 'Polygon') {
-      const imageStyle = attrObjs.style ? ` style={${attrObjs.style}}` : '';
-      const jsname = js.id.replace("-", "").replace("+", "")
-      if (imports.indexOf(`import ${jsname} from './${imagesDir}/${js.id}.png'`) < 0) {
-        imports.push(`import ${jsname} from './${imagesDir}/${js.id}.png'`)
-      }
-      return `${ele.spaces}<img src={${jsname}}${imageStyle}${styles} />`
-    }
-
-    if (js.type == 'Image') {
-      const imageStyle = attrObjs.style ? ` style={${attrObjs.style}}` : '';
-      const jsname = js.id.replace("-", "").replace("+", "")
-      if (imports.indexOf(`import ${jsname} from './${imagesDir}/${js.id}.png'`) < 0) {
-        imports.push(`import ${jsname} from './${imagesDir}/${js.id}.png'`)
-      }
-      return `${ele.spaces}<img src={${jsname}}${imageStyle}${styles} />`
-    }
-
-    if (js.type == 'Path') {
-      const imageStyle = attrObjs.style ? ` style={${attrObjs.style}}` : '';
-      if (ele.end) {
-        return `${ele.spaces}`
-      }
-      const jsname = js.id.replace("-", "").replace("+", "")
-      if (imports.indexOf(`import ${jsname} from './${imagesDir}/${js.id}.png'`) < 0) {
-        imports.push(`import ${jsname} from './${imagesDir}/${js.id}.png'`)
-      }
-      if (ele.single) {
-        return `${ele.spaces}<img src={${jsname}}${imageStyle}${styles} />`
-      } else {
-        return `${ele.spaces}<img src={${jsname}}${imageStyle}${styles} />`
-      }
+          return `${ele.spaces}<p${attrs}${styles}>${js.text}\n${tspans}\n${ele.spaces}</p>`
+        }
+        break;
+      case 'Tspan': return `<p${styles}>${js.text}</p>`
+      case 'Polygon':
+        imageStyle = attrObjs.style ? ` style={${attrObjs.style}}` : '';
+        return `${ele.spaces}<img src={require("./${imagesDir}/${js.id}.png")}${imageStyle}${styles} />`
+      case 'Image':
+        imageStyle = attrObjs.style ? ` style={${attrObjs.style}}` : '';
+        jsname = js.id.replace("-", "").replace("+", "")
+        return `${ele.spaces}<img src={require("./${imagesDir}/${js.id}.png")}${imageStyle}${styles} />`
+      case 'Path':
+        imageStyle = attrObjs.style ? ` style={${attrObjs.style}}` : '';
+        if (ele.end) {
+          return `${ele.spaces}`
+        }
+        if (ele.single) {
+          return `${ele.spaces}<img src={require("./${imagesDir}/${js.id}.png")}${imageStyle}${styles} />`
+        } else {
+          return `${ele.spaces}<img src={require("./${imagesDir}/${js.id}.png")}${imageStyle}${styles} />`
+        }
+      case 'View':
+        return `${ele.spaces}<div${attrs}${styles}${ele.single ? ' /' : ''}>`;
     }
 
     if (ele.end) {
-      return (ele.spaces + '</View>');
+      return (ele.spaces + '</div>');
     }
+    console.log(js.type);
     return `${ele.spaces}<${js.type}${attrs}${styles}${ele.single ? ' /' : ''}>`
 
   }).join("\n");
