@@ -11,6 +11,10 @@ Do you have designs in Sketch, and need to turn those into a mobile app?  This w
 
 Send me your Sketch file and instructions, and I'll run it and email the output back to you: chris@nanohop.com
 
+## Want to collaborate?
+
+[Join us on Slack!](https://join.slack.com/t/design-to-code/shared_invite/enQtMjU5MzQ2OTAzNDEzLWE1MjUzMWVhNzVlNTFlZTFmYmRjODNkNDZmMDI1M2NhMTcwZjgwM2Q5M2Q3OTk5YmNhNTI5MDRmZDk5NmY1MWY)
+
 ## Want this as a service?
 
 We offer that!  We also offer a **human in the loop**, where we'll clean up the output before it goes back to you.  Send me an email to learn more: chris@nanohop.com
