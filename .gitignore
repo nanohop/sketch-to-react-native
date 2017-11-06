@@ -1,5 +1,6 @@
 node_modules
 *.svg
+!examples/*.svg
 output/*
 temp/*
 .DS_Store
