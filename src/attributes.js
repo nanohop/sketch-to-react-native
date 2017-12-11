@@ -156,7 +156,7 @@ const firstBackgroundColor = (js, base, idDims) => {
 const determineAlignJustify = (comp, children, idDims, jsObjs) => {
   let alignJustify = {}
 
-  if(comp.id == 'row' && children && children.length > 0) {
+  if(comp.id == 'row' && children && children.length > 0 && idDims[children[0].id]) {
     const spaceBefore = idDims[children[0].id].left - comp.parentDims.left;
     const spaceAfter = comp.parentDims.right - idDims[children[children.length - 1].id].right;
     let spacesBetween = [];
