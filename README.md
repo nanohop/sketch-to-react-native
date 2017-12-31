@@ -32,7 +32,7 @@ We offer that!  We also offer a **human in the loop**, where we'll clean up the 
 ### Steps to run:
 
 ```bash
-> git clone git@github.com:nanohop/sketch-to-react-native.git
+> git clone https://github.com/nanohop/sketch-to-react-native.git
 > cd sketch-to-react-native
 > npm install && npm link
 > sketch-to-react-native ~/Desktop/myfile.svg
