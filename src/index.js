@@ -8,8 +8,8 @@ const { emptyAndCreateDir, makeDir, copyFolderRecursive } = require('./lib/files
 const { processNode, imagifyParents } = require('./process');
 const { getBrowserBoundingBoxes, screenshotElements } = require('./screenshot');
 const { flexBox, flattenBoxComponents } = require('./flex');
-const { generateComponent, generateComponentStrings } = require('./output');
-const { firstBackgroundColor, nativeAttrs } = require('./attributes');
+const targets = require('./targets');
+const { firstBackgroundColor } = require('./attributes');
 const { generateChildParent } = require('./components');
 const { prepData } = require('./input');
 const { removeStatusBarAndKeyboard } = require('./neural_net');
@@ -26,6 +26,11 @@ process.on("unhandledRejection", function(err) { console.error(err); });
 const INPUT_FILE = process.argv[2]
 if(!INPUT_FILE || INPUT_FILE == '' || !INPUT_FILE.match(/\.svg$/)) {
   throw "Usage: convert.js [svg_file]"
+}
+
+let TARGET = process.argv[3]
+if (!TARGET || Object.keys(targets).indexOf(TARGET) <= -1) {
+  TARGET = 'react-native';
 }
 
 const pathArray = INPUT_FILE.split('/')
@@ -111,12 +116,12 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
       flatEles.forEach((ele) => {
         const js = jsObjs[ele.id];
         if(!ele.end && ele.id != 'row' && ele.id != 'column') {
-          const { componentStyles } = nativeAttrs(js, ele, idDims, childParent);
+          const { componentStyles } = targets[TARGET].nativeAttrs(js, ele, idDims, childParent);
           globalStyles = {...globalStyles, ...componentStyles}
         }
       });
 
-      const { imports, componentStrings } = generateComponentStrings({
+      const { imports, componentStrings } = targets[TARGET].generateComponentStrings({
         flatEles, 
         idDims, 
         childParent, 
@@ -124,7 +129,7 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
         imagesDir: IMAGES_DIR
       });
 
-      const generatedComponent = generateComponent({
+      const generatedComponent = targets[TARGET].generateComponent({
         imports, 
         rootStyle: processedJS.rootStyle, 
         mainBackgroundColor, 
@@ -137,7 +142,7 @@ emptyAndCreateDir(TEMP_COMPONENT_DIR);
 
       console.log("")
       console.log("Images directory written: ", path.join(BASE_PATH, OUTPUT_DIR, IMAGES_DIR))
-      console.log("React Native component generated: ", path.join(BASE_PATH, OUTPUT_DIR, OUTPUT_FILE))
+      console.log(`${targets[TARGET].name} component generated: `, path.join(BASE_PATH, OUTPUT_DIR, OUTPUT_FILE))
       console.log("")
 
     });
