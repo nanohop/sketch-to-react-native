@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "dependencies": {
-    "puppeteer": "^0.10.2",
+    "puppeteer": "^1.13.0",
     "svgson": "^2.1.0"
   },
   "devDependencies": {
